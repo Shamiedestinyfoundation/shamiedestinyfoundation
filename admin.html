@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Admin Dashboard</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+.drop-zone {
+  border:2px dashed #0d6efd;
+  padding:30px;
+  text-align:center;
+  border-radius:10px;
+  cursor:pointer;
+}
+</style>
+</head>
+
+<body class="p-4 bg-light">
+
+<div class="container">
+<h3>Gallery Admin</h3>
+
+<div class="row">
+
+<!-- Upload -->
+<div class="col-md-5">
+  <div class="card p-3 shadow-sm">
+
+    <div id="dropZone" class="drop-zone">
+      Click or Drag Image
+      <input type="file" id="image" hidden>
+    </div>
+
+    <input id="title" class="form-control mt-2" placeholder="Title">
+    <input id="desc" class="form-control mt-2" placeholder="Description">
+
+    <button onclick="uploadImage()" class="btn btn-primary mt-3 w-100">
+      Upload
+    </button>
+
+    <div id="loader" style="display:none;">Uploading...</div>
+
+  </div>
+</div>
+
+<!-- List -->
+<div class="col-md-7">
+  <div class="card p-3 shadow-sm">
+    <div id="galleryList"></div>
+  </div>
+</div>
+
+</div>
+</div>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+import { getFirestore, collection, addDoc, getDocs, deleteDoc, doc } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore.js";
+import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-storage.js";
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "YOUR_KEY",
+  authDomain: "YOUR_DOMAIN",
+  projectId: "YOUR_ID",
+  storageBucket: "YOUR_BUCKET",
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const storage = getStorage(app);
+const auth = getAuth(app);
+
+onAuthStateChanged(auth, user => {
+  if (!user) location.href="login.html";
+});
+
+// Drag
+dropZone.onclick = () => image.click();
+
+// Upload
+window.uploadImage = async () => {
+  const file = image.files[0];
+  if (!file) return alert("Select image");
+
+  loader.style.display = "block";
+
+  const refStorage = ref(storage, "gallery/" + Date.now());
+  await uploadBytes(refStorage, file);
+  const url = await getDownloadURL(refStorage);
+
+  await addDoc(collection(db,"gallery"), {
+    imageUrl: url,
+    title: title.value,
+    description: desc.value
+  });
+
+  loader.style.display = "none";
+  loadGallery();
+};
+
+// Load list
+async function loadGallery() {
+  const snap = await getDocs(collection(db,"gallery"));
+  galleryList.innerHTML="";
+
+  snap.forEach(docSnap=>{
+    const d = docSnap.data();
+
+    galleryList.innerHTML += `
+      <div class="d-flex mb-2">
+        <img src="${d.imageUrl}" width="60">
+        <div class="ms-2 flex-grow-1">
+          ${d.title}
+        </div>
+        <button onclick="deleteItem('${docSnap.id}')" class="btn btn-danger btn-sm">X</button>
+      </div>
+    `;
+  });
+}
+
+window.deleteItem = async(id)=>{
+  await deleteDoc(doc(db,"gallery",id));
+  loadGallery();
+}
+
+loadGallery();
+
+</script>
+
+</body>
+</html>

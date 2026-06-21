@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Message Sent | Shamie Destiny Foundation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+<!-- Favicon for browser tab -->
+<link rel="icon" type="image/png" sizes="32x32" href="img/shamie_nobg.png">
+<link rel="icon" type="image/png" sizes="16x16" href="img/shamie_nobg.png">
+
+<!-- Open Graph / social preview -->
+<meta property="og:title" content="Message Sent | Shamie Destiny Foundation">
+<meta property="og:description" content="Your message has been successfully delivered. Our team will get back to you shortly.">
+<meta property="og:image" content="/assets/social-preview.png">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.shamiedestinyfoundation.com/success.html">
+
+
+<style>
+/* ================= BODY ================= */
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Montserrat', sans-serif;
+  background: linear-gradient(135deg, #ff9abf, #fff6fa);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* ================= FLOATING BLOBS ================= */
+.blob {
+  position: absolute;
+  width: 350px;
+  height: 350px;
+  background: linear-gradient(135deg, #ffb6c1, #cda0ff);
+  border-radius: 50%;
+  filter: blur(100px);
+  opacity: 0.6;
+  animation: float 15s infinite alternate ease-in-out;
+}
+
+.blob.one { top: -120px; left: -120px; animation-duration: 14s; }
+.blob.two { bottom: -140px; right: -100px; animation-duration: 16s; animation-delay: 3s; }
+.blob.three { top: 30%; left: 70%; width: 250px; height: 250px; background: #ffd699; animation-duration: 18s; animation-delay: 5s; }
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(40px) rotate(45deg); }
+  100% { transform: translateY(0px) rotate(90deg); }
+}
+
+/* ================= PARTICLES ================= */
+.particle {
+  position: absolute;
+  background: rgba(255,255,255,0.8);
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  animation: particleMove linear infinite;
+}
+
+@keyframes particleMove {
+  0% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.5; }
+  50% { transform: translateY(-200px) translateX(100px) scale(1); opacity: 1; }
+  100% { transform: translateY(0) translateX(0) scale(0.5); opacity: 0.5; }
+}
+
+/* ================= GLASS CARD ================= */
+.glass-card {
+  position: relative;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border-radius: 25px;
+  padding: 50px 40px;
+  text-align: center;
+  max-width: 450px;
+  width: 90%;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+  animation: pop 0.6s ease-out;
+}
+
+@keyframes pop {
+  from { transform: scale(0.8); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+.glass-card i {
+  font-size: 4rem;
+  color: #ff69b4; /* pink */
+  margin-bottom: 15px;
+  animation: bounce 1.2s infinite;
+}
+
+@keyframes bounce {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+.glass-card h1 {
+  color: #ff1ac6;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.glass-card p {
+  color: rgba(255,255,255,0.9);
+  margin-bottom: 25px;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.glass-card a {
+  display: inline-block;
+  padding: 12px 30px;
+  border-radius: 30px;
+  background: #ff69b4;
+  color: #fff;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.glass-card a:hover {
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+}
+
+/* ================= RESPONSIVE ================= */
+@media (max-width: 480px) {
+  .glass-card { padding: 40px 25px; }
+  .glass-card h1 { font-size: 1.8rem; }
+  .glass-card p { font-size: 0.95rem; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- Animated Background Blobs -->
+<div class="blob one"></div>
+<div class="blob two"></div>
+<div class="blob three"></div>
+
+<!-- Random Particle Sparkles -->
+<script>
+  for(let i=0;i<40;i++){
+    let p = document.createElement('div');
+    p.className = 'particle';
+    p.style.left = Math.random()*100 + '%';
+    p.style.top = Math.random()*100 + '%';
+    p.style.animationDuration = (5 + Math.random()*5) + 's';
+    document.body.appendChild(p);
+  }
+</script>
+
+<!-- Glass Card -->
+<div class="glass-card">
+  <i class="fas fa-circle-check"></i>
+  <h1>Message Sent!</h1>
+  <p>
+    Thank you for reaching out to Shamie Destiny Foundation.
+    Your message has been successfully delivered. Our team will get back to you shortly.
+  </p>
+  <a href="index.html">Back to Home</a>
+</div>
+
+</body>
+</html>
