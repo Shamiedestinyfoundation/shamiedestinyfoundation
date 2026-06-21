@@ -1023,20 +1023,14 @@ Guided by our motto, “A safer society for a safer child,” we work to uplift 
         Send Us a Message
       </h2>
 
-<form
-  name="contact"
-  method="POST"
-  action="success.html"
-  data-netlify="true"
-  netlify-honeypot="bot-field">
+<form name="contact" method="POST" action="/success.html" data-netlify="true" data-netlify-honeypot="bot-field">
 
-  <!-- Required hidden fields -->
   <input type="hidden" name="form-name" value="contact">
-  <input type="hidden" name="subject" value="New Contact Message - Shamie Destiny Foundation">
 
-  <!-- Honeypot -->
-  <p hidden>
-    <label>Don’t fill this out: <input name="bot-field"></label>
+  <p style="display:none;">
+    <label>Don't fill this out if you're human:
+      <input name="bot-field">
+    </label>
   </p>
 
   <div class="input-group">
